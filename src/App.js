@@ -20,32 +20,41 @@ function App() {
     let h = Time.getHours();
     let m = Time.getMinutes();
     let s = Time.getSeconds();
-    let AddOn = dd + '-' + mm + '-' + yyyy + ' ' + 'at' + h + '-' + m + '-' + s;
+    let AddOn ="  "+dd + ' /' + mm + ' /' + yyyy+" "+"( "+h+"  ."+m+" . "+s+" )";
 
     //ADD Item In Todos
     let NewTodoItem = {
       title: NewTitle,
-      Description:Description,
+      Description: Description,
       AddOn: AddOn,
     }
-    //Create And Push New Todo 
+    //Create And Push New Todo
     let UpdatedTodoArray = [...AllTodos];
     UpdatedTodoArray.push(NewTodoItem);
     setTodos(UpdatedTodoArray);
-    localStorage.setItem('Todolist', JSON.stringify(UpdatedTodoArray));
+    localStorage.setItem('todolist', JSON.stringify(UpdatedTodoArray));
   };
 
   // In Which We Delete Todos On Todo 
-  const DeleteTodo = index => {
-    let RemoveTodo = [...AllTodos];
-    RemoveTodo.splice(index);
+  const DeleteTodo = (index) => {
+    let removeTodo = [...AllTodos];
+    removeTodo.splice(index, 1);
 
-    localStorage.setItem('Todolist', JSON.stringify(RemoveTodo));
-    setTodos(RemoveTodo);
+    localStorage.setItem('todolist', JSON.stringify(removeTodo));
+    setTodos(removeTodo);
+  }
+
+  //Delete Completed To Todo
+  const DeleteCompletedTodo = (index) => {
+    let reducedTodo = [...completeTask];
+    reducedTodo.splice(index, 1);
+
+    localStorage.setItem('CompleteTask', JSON.stringify(reducedTodo));
+    setCompleteTask(reducedTodo)
   }
 
   //in Which We Completed And ToDo Item
-  const CompletedTodo = index => {
+  const CompletedTodo = (index) => {
     let Time = new Date();
     let dd = Time.getDate();
     let mm = Time.getMonth() + 1;
@@ -53,86 +62,76 @@ function App() {
     let h = Time.getHours();
     let m = Time.getMinutes();
     let s = Time.getSeconds();
-    let CompletedOn = dd + '-' + mm + '-' + yyyy + ': ' + 'at' + h + '-' + m + '-' + s;
-
-    let FilteredItem = {
+    let CompletedOn = dd + ' /' + mm + ' /' + yyyy+" "+"( "+h+"  ."+m+" . "+s+" )";
+    let filteredItem = {
       ...AllTodos[index],
+      Description: Description,
       CompletedOn: CompletedOn,
     };
 
     let updatedCompletedArr = [...completeTask];
-    updatedCompletedArr.push(FilteredItem);
-    setCompleteTask(updatedCompletedArr)
-    DeleteTodo(index);
-    localStorage.setItem('completeTask', JSON.stringify(updatedCompletedArr))
-  }
-
-  //Delete Completed To Todo
-  const DeleteCompletedTodo = (index) => {
-    let ReducedTodo = [...completeTask];
-    ReducedTodo.splice(index);
-
-    localStorage.setItem('completeTask', JSON.stringify(ReducedTodo));
-    setCompleteTask(ReducedTodo)
+    updatedCompletedArr.push(filteredItem);
+    setCompleteTask(updatedCompletedArr);
+    DeleteTodo(index, 1);
+    localStorage.setItem('CompleteTask', JSON.stringify(updatedCompletedArr));
   }
 
   useEffect(() => {
-    let SavedTodo = JSON.parse(localStorage.getItem('Todolist'));
-    let SavedTodoCompletedTodo = JSON.parse
-      (localStorage.getItem('completeTask'));
-
+    let SavedTodo = JSON.parse(localStorage.getItem('todolist'));
+    let SavedCompletedTodo = JSON.parse(localStorage.getItem('CompleteTask')
+    );
     if (SavedTodo) {
       setTodos(SavedTodo);
     }
-    if (SavedTodoCompletedTodo) {
-      setCompleteTask(SavedTodoCompletedTodo);
+    if (SavedCompletedTodo) {
+      setCompleteTask(SavedCompletedTodo);
     }
-  }, [])
+  }, []);
 
   return (
     <div className='App'>
       <h1 className='Title'>My Todos</h1>
-      <div className='todo-wrapper'>
-        <div className='todo-input'>
-          <div className='todo-input-item'>
+      <div className='Wrapper'>
+        <div className='Input'>
+          <div className='todo-input'>
             <label>Title</label>
             <input
               type="text"
               value={NewTitle}
-              onChange={e => setNewTitle(e.target.value)}
+              onChange={(e) => setNewTitle(e.target.value)}
               placeholder="What's the Task title" />
           </div>
 
-          <div className='todo-input-item'>
+          <div className='todo-input'>
             <label>Description</label>
             <input type="text"
               value={Description}
-              onChange={e => setNewDescription(e.target.value)}
+              onChange={(e) => setNewDescription(e.target.value)}
               placeholder="What's the Task Description" />
 
           </div>
 
-          <div className='todo-input-item'>
+          <div className='todo-input'>
 
             <button
               type='button'
               onClick={AddTodo}
-              className='primaryBtn'>
+              className='Impo-Btn'>
               ADD
             </button>
 
           </div>
         </div>
 
-        <div className='btn-area'>
+        <div className='Button-Tab'>
           <button
-            className={`secondaryBtn ${fullScreen === false && 'active'}`}
+            className={`SecondButton ${fullScreen === false && 'active'}`}
             onClick={() => setfullScreen(false)}>
             ToDo
           </button>
 
           <button
-            className={`secondaryBtn ${fullScreen === true && 'active'}`}
+            className={`SecondButton ${fullScreen === true && 'active'}`}
             onClick={() => setfullScreen(true)}>
             Completed
           </button>
@@ -142,42 +141,42 @@ function App() {
         <div className='todo-list' >
 
           {fullScreen === false && AllTodos.map((item, index) => {
-              return (
-                <div className='todo-list-item' key={index}>
+            return (
+              <div className='todo-list-item' key={index}>
 
-                  <div>
-                    <h3>{item.title}</h3>
-                    <p>{item.Description}</p>
-                    <p><small>Task Addon:{item.AddOn}</small></p>
-                  </div>
-
-                  <div>
-                    <FiThumbsUp
-                      className='check-icon'
-                      onClick={() => CompletedTodo(index)}
-                      title="Complete?"
-                    />
-
-                    <RiDeleteBin5Line
-                      className='icon'
-                      onClick={()=>DeleteTodo(index)}
-                      title="Delete?"
-                    />
-                  </div>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.Description}</p>
+                  <p><small>Task Addon:{item.AddOn}</small></p>
                 </div>
-              );
-            })}
+
+                <div>
+                  <FiThumbsUp
+                    className='check-icon'
+                    onClick={() => CompletedTodo(index)}
+                    title="Complete?"
+                  />
+
+                  <RiDeleteBin5Line
+                    className="icon"
+                    onClick={() => DeleteTodo(index)}
+                    title="Delete?"
+                  />
+                </div>
+              </div>
+            );
+          })}
 
 
           {fullScreen === true && completeTask.map((item, index) => {
             return (
-              <div className='todo-list-item' key={index}>
+              <div className="todo-list-item" key={index}>
                 <div>
                   <h3>{item.title}</h3>
-                  <p>{item.description}</p>
+                  <p>{item.Description}</p>
                   <p ><small>Comoleted on: {item.CompletedOn}</small></p>
-
                 </div>
+
                 <div>
                   <RiDeleteBin5Line
                     className='icon'
@@ -185,7 +184,6 @@ function App() {
                     title="Delete?"
                   />
                 </div>
-
               </div>
             );
           })}
