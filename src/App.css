@@ -9,8 +9,9 @@ h1 {
   color: aqua;
   font-weight: 900;
   font-family: cursive;
+  /* display: inline-block;
+  margin-left:420px; */
 }
-
 
 label {
   color: rgb(0, 230, 0);
@@ -22,8 +23,9 @@ small {
   color: #fdfdfd;
 }
 
-.todo-wrapper {
+.Wrapper {
   background-color: #0070ff99;
+
   padding: 2%;
   width: fit-content;
   margin-left: auto;
@@ -35,7 +37,7 @@ small {
 
 }
 
-.todo-input {
+.Input {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,21 +46,21 @@ small {
   margin-bottom: 25px;
 }
 
-.todo-input-item {
+.todo-input{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   margin-right: 25px;
 }
 
-.todo-input-item label {
+.todo-input label {
   font-weight: bold;
   margin-bottom: 10px;
   margin-left: 84px;
   font-size: 21px;
 }
 
-.todo-input-item input {
+.todo-input input {
   padding: 10px;
   border: none;
   border-radius: 16px;
@@ -66,11 +68,11 @@ small {
   height: 37px;
 }
 
-.todo-input-item input:focus {
+.todo-input input:focus {
   outline: 2px solid rgb(0, 230, 122)
 }
 
-.primaryBtn {
+.Impo-Btn{
   background-color: rgb(255 0 0 / 81%);
   color: white;
   border-radius: 16px;
@@ -82,13 +84,13 @@ small {
   margin-left: 2px;
 }
 
-.primaryBtn:hover {
+.Impo-Btn:hover {
   background-color: rgb(4, 196, 106);
 }
 
-.secondaryBtn {
+.SecondButton{
   font-size: large;
-  background-color: rgb(71, 71, 71);
+  background-color: #1f1e1e;
   color: white;
   border-radius: 81px;
   margin-top: 20px;
@@ -114,7 +116,7 @@ small {
   flex-direction: column;
 }
 
-.btn-area {
+.Button-Tab {
   margin-bottom: 15px;
 
 }
@@ -166,139 +168,3 @@ small {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* .App {
-  text-align: center;
-}
-.leo .active{
-  color:#55ff00;
-  background-color: rgba(0, 0, 0, 0.838);
-}
-
-.leo li{
-  display: inline-block;
-  padding: 0px 50px;
-  border:2px solid red;
-}
-.leo{
-  text-align: center;
-  padding: 15px 0px;
-  margin-left: 8px;
-}
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-span{
-  padding: 10px;
-    background-color: #666;
-    font-size: 20px;
-    color: #fff;
-}
-.nav-bar-link{
-  text-decoration: none;
-}
-.nav-bar-link:hover{
-  color:rgba(255, 0, 0, 0.853);
-}
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
